@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="man/figures/boldconnectr_logo.png" width="250" />
+<img src="man/figures/boldconnectr_logo.png" alt="" width="250" />
 
 <!-- badges: start -->
 
@@ -14,9 +14,7 @@ the functionality to obtain public and private user data available in
 the database in the *Barcode Core Data Model (BCDM)* format. Data
 include information on the
 **taxonomy**,**geography**,**collection**,**identification** and **DNA
-barcode sequence** of every submission. The manual is currently hosted
-here
-(<https://github.com/boldsystems-central/BOLDconnectR_examples/blob/main/BOLDconnectR_1.0.0.pdf>)
+barcode sequence** of every submission.
 
 **BOLDconnectR** requires **R** version **4.0** or above to function
 properly. The versions of dependent packages have also been set such
@@ -30,13 +28,19 @@ More details on *Suggested packages* provided below.
 
 ## Installation
 
-The package can be installed using `devtools::install_github` function
-from the `devtools` package in R (which needs to be installed before
-installing BOLDConnectR).
+The package can be installed either by `install.packages()` for the CRAN
+version or using the `devtools::install_github` or `pak::pak` functions from the
+`devtools`/ `pak` packages in R (which need to be installed before installing
+BOLDConnectR).
 
 ``` r
+## CRAN install
+# install.packages('BOLDconnectR')
 
-devtools::install_github("https://github.com/boldsystems-central/BOLDconnectR")
+## GitHub install
+# devtools::install_github("https://github.com/boldsystems-central/BOLDconnectR")
+# OR
+# pak::pak("boldsystems-central/BOLDconnectR")
 ```
 
 ``` r
@@ -57,13 +61,15 @@ library(BOLDconnectR)
 10. bold.analyze.map
 11. bold.export
 
-**Note on Suggested packages** *Function 6*: *bold.data.summarize*
-requires the packages `Biostrings` to be installed and imported in R
-session beforehand for generating the `barcode_summary`.
-*Function 7*: *bold.analyze.align* requires the packages `msa` and
-`Biostrings` to be installed and imported in the R session beforehand.
-Function 8 also uses the output generated from function 7. `msa` and
-`Biostrings` can be installed using the `BiocManager` package.
+**Note on Suggested packages** *Function 5*: *bold.data.summarize*
+requires the packages `Biostrings` to be installed and imported in the R
+session beforehand for generating the `barcode_summary`. `msa` and
+`Biostrings` can be installed using using `BiocManager` package.
+*Function 6*: *bold.analyze.align* requires the packages `msa`, `muscle`
+and `Biostrings` to be installed and imported in the R session
+beforehand. Function 7 also uses the the output generated from function
+6. `msa`, `muscle` and `Biostrings` can be installed using using
+`BiocManager` package.
 
 ``` r
 
@@ -72,14 +78,16 @@ install.packages("BiocManager")
 
 BiocManager::install("msa")
 BiocManager::install("Biostrings")
+BiocManager::install("muscle")
 
 library(msa)
 library(Biostrings)
+library(muscle)
 ```
 
 ### Note on API key
 
-The function `bold.fetch` requires an `api key` internally to
+The function `bold.fetch` requires an `api key` internally in order to
 access and download all public + private user data. The API key needed
 to retrieve BOLD records is found in the BOLD ‘Workbench’
 <https://bench.boldsystems.org/index.php/Login/page?destination=MAS_Management_UserConsole>.
@@ -88,9 +96,7 @@ side of the window) and click ‘Edit User Preferences’. You can find the
 API key in the ‘User Data’ section. Please note that to have an API key
 available in the workbench, a user must have uploaded at least 10,000
 records to BOLD. API key can be saved in the R session using
-`bold.apikey()` function. 
-**Please note that the API keys are regenerated periodically 
-and will be updated in the user's workbench account. Using old keys will result in a HTTP 401 error.**
+`bold.apikey()` function.
 
 ``` r
 # Substitute ‘00000000-0000-0000-0000-000000000000’ with your key
@@ -105,21 +111,19 @@ see above).
 #### Fetch data
 
 ``` r
+
 BCDM_data<-bold.fetch(get_by = "processid",
                       identifiers = test.data$processid)
-#> [32mInitiating download[0m
-#> [31m Downloading data in a single batch [0m 
-#> [32mDownload complete & BCDM dataframe generated[0m
 
 knitr::kable(head(BCDM_data,4))
 ```
 
 | processid | record_id | insdc_acs | sampleid | specimenid | taxid | short_note | identification_method | museumid | fieldid | collection_code | processid_minted_date | inst | funding_src | sex | life_stage | reproduction | habitat | collectors | site_code | specimen_linkout | collection_event_id | sampling_protocol | tissue_type | collection_date_start | collection_time | associated_taxa | associated_specimens | voucher_type | notes | taxonomy_notes | collection_notes | geoid | marker_code | kingdom | phylum | class | order | family | subfamily | tribe | genus | species | subspecies | identification | identification_rank | species_reference | identified_by | sequence_run_site | nuc | nuc_basecount | sequence_upload_date | bin_uri | bin_created_date | elev | depth | coord | coord_source | coord_accuracy | elev_accuracy | depth_accuracy | realm | biome | ecoregion | region | sector | site | country_iso | country.ocean | province.state | bold_recordset_code_arr | collection_date_end |
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|---:|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|---:|:---|:---|:---|---:|---:|:---|:---|---:|---:|---:|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| SSWLD6460-13 | SSWLD6460-13.COI-5P | KM825932 | BIOUG06662-C01 | 3435715 | 9199 | Waterton Lakes NP | BOLD ID Engine: top hits | BIOUG06662-C01 | L#12BIOBUS-1587 | BIOUG | 2013-07-04 | Centre for Biodiversity Genomics | iBOL:WG1.9 | NA | NA | NA | Forest | BIOBus 2012 | BIOUG:WATERTON-NP:2 | NA | NA | Sweep Net | Whole Voucher | 2012-08-08 | NA | NA | NA | Vouchered:Registered Collection | NA | NA | 5 min sweep x4 collectors (2)\|Sunny with slight haze, 23C\|montane forest, douglas fir and lodgepole pine stand with aspen and birch understory | 533 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Eris | Eris militaris | NA | Eris militaris | species | (Hentz, 1845) | Monica R. Young | Centre for Biodiversity Genomics | AACGTTATATTTAATTTTTGGAGCTTGATCAGCTATAGTTGGTACTGCTATAAGAGTATTAATTCGAATAGAATTAGGACAAACT—GGATCATTTTTAGGT————AATGATCATATATATAATGTAATTGTAACTGCTCATGCTTTTGTAATGATTTTTTTTATAGTAATACCAATTATAATTGGGGGATTTGGTAATTGGTTAGTTCCTTTAATGTTAGGGGCTCCGGATATAGCTTTTCCTCGAATAAATAATTTAAGTTTTTGATTATTACCTCCTTCTTTATTTTTATTGTTTATTTCTTCTATAGCTGAAATAGGGGTT—GGAGCTGGATGAACAGTATATCCTCCTTTGGCATCTATTGTTGGACATAATGGTAGATCAGTAGATTTTGCTATTTTTTCTTTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACTATTATTAATATACGA—TCAGTAGGAATATCTTTAGATAAAATTCCTTTATTTGTTTGATCTGTAATAATTACTGCTGTATTATTATTGTTATCATTACCTGTTTTAGCAGGAGCTATTACTATATTATTAACTGAT——————— | 589 | 2013-09-16 | BOLD:AAA5654 | 2010-07-15 | 1562 | NA | 49.065,-113.778 | GPSmap 60Cx | NA | NA | NA | Nearctic | NA | Northern_Rockies_conifer_forests | Waterton Lakes National Park | East of 2 Flags Lookout | Highway 6 pulloff | CA | Canada | Alberta | SSWLD,DS-MOB113,DS-BICNP02,DS-SOC2014,DS-ARANCCYH,DATASET-BBWLNP1,DS-SPCANADA,DS-JUMPGLOB,DS-MOB112,DS-CANSS | NA |
-| SPITO327-14 | SPITO327-14.COI-5P | KP654265 | BIOUG12602-G11 | 4610196 | 9162 | NA | NA | BIOUG12602-G11 | L#14BLITZ-001 | BIOUG | 2014-06-10 | Centre for Biodiversity Genomics | iBOL:WG1.9 | M | A | S | NA | Gergin Blagoev | NA | NA | NA | Free Hand Collection | NA | 2014-05-24 | NA | NA | NA | museum voucher | Collected May 24-14, as part of Humber Watershed BioBlitz | NA | NA | 528 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Phidippus | Phidippus audax | NA | Phidippus audax | species | (Hentz, 1845) | Gergin A. Blagoev | Centre for Biodiversity Genomics | -ACATTATATTTGATTTTTGGAGCTTGGGCTGCAATAGTTGGTACTGCAATA—AGTGTATTGATTCGAATAGAATTGGGTCAAACTGGATCATTTATAGGAAAT—GATCATATATATAATGTAATTGTGACTGCTCATGCTTTTGTTATAATTTTTTTTATAGTAATACCTATTATGATTGGAGGATTTGGAAACTGATTAGTTCCTTTAATA—TTAGGTGCTCCTGATATGGCTTTTCCTCGTATAAATAATTTGAGATTTTGATTATTACCCCCTTCTTTATTTTTATTATTTATTTCTTCCATAGCTGAGGTAGGTGTAGGGGCTGGTTGGACAGTTTATCCACCTTTGGCCTCTATTGTTGGGCATAATGGAAGATCAGTAGATTTT—GCTATTTTTTCATTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACAATTATTAATATACGTTCTTTAGGAATGTCTTTAGATAAAATTCCTTTGTTTGTTTGATCTGTAATAATTACTGCAGTTTTGTTATTACTTTCTCTTCCTGTATTAGCTGGG—GCTATTACTATATTGTTGACTGAT——————————————————————————————————————————————————————————————————————————————————————- | 588 | 2014-06-27 | BOLD:AAC6891 | 2010-07-15 | 380 | NA | 43.933,-79.928 | NA | NA | NA | NA | Nearctic | NA | Eastern_Great_Lakes_lowland_forests | Humber Watershed | NA | Glen Haffy Conservation Area | CA | Canada | Ontario | SPITO,DS-SOC2014,DS-ARANCCYH,DS-TMPSRCH,DS-SPCANADA,DS-OLOCC2,DS-JUMPGLOB | NA |
-| ARONT071-09 | ARONT071-09.COI-5P | GU682836 | 09ONTGAB-183 | 1229966 | 30494 | SPIOH09-1 F11 | NA | 09ONTGAB-183 | 090816FH | BIOUG | 2009-09-23 | Centre for Biodiversity Genomics | iBOL:WG1.9 | M | I | S | NA | G.A.Blagoev | NA | NA | NA | NA |  | 2009-08-16 | NA | NA | NA | NA |  | NA | NA | 528 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Naphrys | Naphrys pulex | NA | Naphrys pulex | species | (Hentz, 1846) | Gergin A. Blagoev | Centre for Biodiversity Genomics | AACATTATATTTGATTTTTGGTGCTTGATCAGCTATAGTAGGTACGGCTATAAGAGTTTTGATTCGAATAGAGTTGGGACAGACTGGTAATTTTTTGGGAAATGATCATTTATATAATGTCATTGTAACTGCTCATGCTTTTGTTATGATTTTTTTTATAGTAATACCTATTTTGATTGGTGGTTTTGGTAATTGATTAGTGCCATTAATATTAGGGGCTCCTGATATAGCTTTTCCTCGGATGAATAATTTGAGATTTTGGTTATTACCCCCTTCATTAATACTCTTATTTATATCTTCAATAGTGGAGATAGGGGTAGGAGCAGGGTGAACAGTGTATCCCCCATTAGCTTCTGTTGTAGGTCATAATGGAAGATCTGTTGATTTTGCTATTTTTTCTTTACATTTAGCGGGGGCTTCTTCTATTATAGGAGCAGTTAATTTTATTTCTACTATTATTAATATACGTGTATTAGGAATGAGAATAGATAAGATTCCTTTGTTTGTTTGGTCAGTTGGGATTACTGCTGTATTATTATTATTATCACTACCAGTGTTGGCTGGTGCTATTACAATATTGTTGACTGATCGTAATTTTAATACCTCTTTTTTTGATCCTGCGGGAGGAGGGGATCCGGTTTTGTTTCAGCATTTATTT | 658 | 2009-10-29 | BOLD:AAC2433 | 2010-07-15 | 300 | NA | 43.691,-80.414 |  | NA | NA | NA | Nearctic | NA | Eastern_Great_Lakes_lowland_forests | Wellington Co. | Elora | Beach | CA | Canada | Ontario | ARONT,DS-MOB113,DS-SOC2014,DS-MYBCA,DS-ARANCCYH,DS-SPCANADA,DS-OLOCC1,DS-JUMPGLOB,DS-MOB112,DS-JALPHA | NA |
-| SPIRU1237-11 | SPIRU1237-11.COI-5P | KF368796 | BIOUG00629-G03 | 1982513 | 842900 | ocean beach\|AP\|HC | NA | BIOUG00629-G03 | L#10PROBE-6510 | 10PROBE | 2011-05-16 | Centre for Biodiversity Genomics | iBOL:WG1.10 |  | I | S | NA | V. Junea | BIOUG:Churchill | NA | NA | NA | NA | 2010-07-30 | NA | NA | NA | whole specimen | NA | NA | NA | 531 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Sittisax | Sittisax ranieri | NA | Sittisax ranieri | species | (G. W. Peckham & E. G. Peckham, 1909) | Gergin A. Blagoev | Centre for Biodiversity Genomics | TACGTTATATTTAGTTTTTGGAGCTTGGTCTGCTATAGTTGGTACGGCTATAAGAGTTTTAATTCGTATAGAATTAGGTCAAACTGGTCATTTTTTAGGAAATGATCATTTGTATAATGTAATTGTTACTGCACATGCATTTGTTATAATTTTTTTTATAGTAATACCTATTTTGATTGGAGGTTTTGGTAATTGATTAGTCCCTCTAATGTTAGGAGCTCCGGATATAGCTTTTCCTCGTATAAATAATTTAAGTTTTTGATTATTACCTCCTTCATTATTTTTATTATTTATTTCATCTATAGCTGAGATAGGAGTAGGGGCAGGGTGAACTGTTTATCCTCCATTAGCTTCTATTGTAGGTCATAATGGAAGTTCGGTAGATTTTGCTATTTTTTCTCTTCATTTGGCTGGGGCTTCATCAATTATAGGTGCTATTAATTTTATTTCAACTGTTATTAATATACGATCGGTGGGTATATCAATAGATAAGATTCCATTGTTTGTTTGGTCTGTTGTAATTACTGCTGTATTATTGTTATTGTCTTTACCTGTTTTAGCGGGTGCAATTACTATGCTATTGACTGATCGAAATTTTAATACGTCTTTTTTTGATCCTGCTGGAGGAGGGGATCCAATTTTATTTCAACATTTATTT | 658 | 2012-11-23 | BOLD:AAC2061 | 2010-07-15 | NA | NA | 58.772,-93.843 | GPS WGS84 | NA | NA | NA | Nearctic | NA | Southern_Hudson_Bay_taiga | Churchill | 16 km E Churchill, Bird Cove, Rock Bluff A | Beach | CA | Canada | Manitoba | CHSPI,DATASET-CHURCH12,DS-MOB113,DS-SOC2014,DS-ARANCCYH,DS-TMPSRCH,DS-SPCANADA,DS-ATBIB,DS-JUMPGLOB,DS-MOB112,DS-ARA43210 | NA |
+| BBCNP2615-14 | BBCNP2615-14.COI-5P | KP654931 | BIOUG12571-E02 | 4468216 | 9199 | Prince Albert NP | NA | BIOUG12571-E02 | L#12BIOBUS-1007 | BIOUG | 2014-04-21 | Centre for Biodiversity Genomics | iBOL:WG1.9 | NA | I | S | NA | BIOBus 2012 | NA | NA | NA | Free Hand Collection | NA | 2012-07-13 | NA | NA | NA | museum voucher | hand collecting\|sunny with haze\|25C | CollectionsID | NA | 511 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Eris | Eris militaris | NA | Eris militaris | species | (Hentz, 1845) | Gergin A. Blagoev | Centre for Biodiversity Genomics | ACGTTATATTTAATTTTTGGAGCTTGATCAGCTATAGTTGGTACTGCTATAAGAGTATTAATTCGAATAGAATTAGGACAAACTGGATCATTTTTAGGTAATGATCATATATATAATGTAATTGTAACTGCTCATGCTTTTGTAATGATTTTTTTTATAGTAATACCAATTATAATTGGGGGATTTGGTAATTGGTTAGTTCCTTTAATGTTAGGGGCTCCGGATATAGCTTTTCCTCGAATAAATAATTTAAGTTTTTGATTATTACCTCCTTCTTTATTTTTATTGTTTATTTCTTCTATAGCTGAAATAGGGGTTGGAGCTGGATGAACAGTATATCCTCCTTTGGCATCTATTGTTGGACATAATGGTAGATCAGTAGATTTTGCTATTTTTTCTTTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACTATTATTAATATACGATCAGTAGGAATATCTTTAGATAAAATTCCTTTATTTGTTTGATCTGTAATAATTACTGCTGTATTATTATTGTTATCATTACCTGTTTTAGCAGGA——————————————————————— | 564 | 2014-06-26 | BOLD:AAA5654 | 2010-07-15 | 549 | NA | 53.59,-106.278 | GPSmap 60Cx | NA | NA | NA | Nearctic | NA | Mid-Canada_Boreal_Plains_forests | Prince Albert NP | Hunters Lake Trail | predominately aspen forest | CA | Canada | Saskatchewan | BBCNP,DS-SOC2014,DS-ARANCCYH,DATASET-BBPANP1,DS-SPCANADA,DS-JUMPGLOB | NA |
+| BBCAN226-09 | BBCAN226-09.COI-5P | GU683124 | CCDB-04550-C12 | 1274762 | 9199 | Kouchibouguac NP | BOLD ID Engine | CCDB-04550-C12 | L#09KC-053 | BIOUG | 2009-11-23 | Centre for Biodiversity Genomics | iBOL:WG1.9 | F | I | S | Wetland | BIObus 2009 | NA | NA | NA | Free Hand |  | 2009-08-17 | NA | NA | NA | Vouchered:Registered Collection | NA | NA | Free Hand\|Mixed sun and cloud after rain\|Boardwalk through a bog | 521 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Eris | Eris militaris | NA | Eris militaris | species | (Hentz, 1845) | Gergin A. Blagoev | Centre for Biodiversity Genomics | GACGTTATATTTAATTTTTGGAGCTTGATCAGCTATAGTTGGTACTGCTATAAGAGTATTAATTCGAATAGAATTAGGACAAACTGGATCATTTTTAGGTAATGATCATATATATAATGTAATCGTAACTGCTCATGCTTTTGTAATGATTTTTTTTATAGTAATACCAATTATAATTGGGGGATTTGGTAATTGGTTAGTTCCTTTAATGTTAGGGGCTCCGGATATAGCTTTTCCTCGAATAAATAATTTAAGTTTTTGATTATTACCTCCTTCTTTATTTTTATTATTTATTTCTTCTATAGCTGAAATAGGGGTTGGAGCTGGATGAACAGTATATCCTCCTTTGGCATCTATTGTTGGACATAATGGCAGATCAGTAGATTTTGCTATTTTTTCTTTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACTATTATTAATATACGATCAGTAGGAATATCTTTAGATAAAATTCCTTTATTTGTTTGATCTGTAATAATTACTGCTGTATTATTATTGTTATCATTACCTGTTTTAGCAGGAGCTATTACTATATTATTAACTGATCGAAATTTTAATACTTCTTTTTTTGATCCTGCAGGAGGAGGAGATCCAATTTTGTTTCAACATTTATTT | 658 | 2011-03-25 | BOLD:AAA5654 | 2010-07-15 | 7 | NA | 46.816,-64.953 | NA | NA | NA | NA | Nearctic | NA | Gulf_of_St.\_Lawrence_lowland_forests | Kouchibouguac NP | The Bog Trail | NA | CA | Canada | New Brunswick | SPIBB,DATASET-BBKCNP1,DATASET-BBCNP1,DS-MOB113,DS-BICNP02,DS-SOC2014,DS-ARANCCYH,DS-DDSG,DS-SPCANADA,DS-JUMPGLOB,DS-MOB112 | NA |
+| ARSO594-09 | ARSO594-09.COI-5P | KM826219 | 08BBARAC-0466 | 990633 | 9199 | Riding Mountain NP |  | 08BBARAC-0466 | L#08RIDMO-097 | BIOUG | NA | Centre for Biodiversity Genomics | NA | F | I | S | NA | BIObus 2008 | NA | NA | NA | Sweep Net | NA | 2009-08-19 | NA | NA | NA | Vouchered:Registered Collection | NA | NA | Sweep Net\|\|Hiking trail | 531 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Eris | Eris militaris | NA | Eris militaris | species | (Hentz, 1845) | Gergin A. Blagoev | Centre for Biodiversity Genomics | AACGTTATATTTAATTTTTGGAGCTTGATCAGCTATAGTTGGTACTGCTATAAGAGTATTAATTCGAATAGAATTAGGACAAACTGGATCATTTTTAGGTAATGATCATATATATAATGTAATTGTAACTGCTCATGCTTTTGTAATGATTTTTTTTATAGTAATACCAATTATAATTGGGGGATTTGGTAATTGGTTAGTTCCTTTAATGTTAGGGGCTCCGGATATAGCTTTTCCTCGAATAAATAATTTAAGTTTTTGATTATTACCTCCTTCTTTATTTTTATTATTTATTTCTTCTATAGCTGAAATAGGGGTTGGAGCTGGATGAACAGTATATCCTCCTTTGGCATCTATTGTTGGACATAATGGTAGATCAGTAGATTTTGCTATTTTTTCTTTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACTATTATTAATATACGATCAGTAGGAATATCTTTAGATAAAATTCCTTTATTTGTTTGATCTGTAATAATTACTGCTGTATTATTATTGTTATCATTACCTGTTTTAGCAGGAGCTATTACTATATTATTAACTGATCGAAATTTTAATACTTCTTTTTTTGATCCTGCAGGAGGAGGAGATCCAATTTTGTTTCAACATTtaTTt | 658 | 2009-05-30 | BOLD:AAA5654 | 2010-07-15 | 662 | NA | 50.881,-100.056 | NA | NA | NA | NA | Nearctic | NA | Mid-Canada_Boreal_Plains_forests | Riding Mountain NP | Moon Lake | Hiking Trail | CA | Canada | Manitoba | SPIBB,DATASET-BBRMNP1,DS-MOB113,DS-BICNP02,DS-SOC2014,DS-ARANCCYH,DS-SPCANADA,DS-JUMPGLOB,DS-MOB112 | NA |
+| BBCNP1308-14 | BBCNP1308-14.COI-5P | KP648859 | BIOUG09535-G01 | 4141099 | 9199 | Elk Island NP | NA | BIOUG09535-G01 | L#12BIOBUS-0772 | BIOUG | 2014-01-17 | Centre for Biodiversity Genomics | iBOL:WG1.9 | M | A | S | NA | BIOBus 2012 | NA | NA | NA | Free Hand Collection | NA | 2012-07-02 | NA | NA | NA | museum voucher | hand collecting\|mostly sunny\|24C | CollectionsID | NA | 533 | COI-5P | Animalia | Arthropoda | Arachnida | Araneae | Salticidae | NA | NA | Eris | Eris militaris | NA | Eris militaris | species | (Hentz, 1845) | Gergin A. Blagoev | Centre for Biodiversity Genomics | GAACGTTATATTTAATTTTTGGAGCTTGATCAGCTATAGTTGGTACTGCTATAAGAGTATTAATTCGAATAGAATTAGGACAAACTGGATCATTTTTAGGTAATGATCATATATATAATGTGATTGTAACTGCTCATGCTTTTGTAATGATTTTTTTTATAGTAATACCAATTATAATTGGGGGATTTGGTAATTGGTTAGTTCCTTTAATGTTAGGGGCTCCGGATATAGCTTTTCCTCGAATAAATAATTTAAGTTTTTGATTATTACCTCCTTCTTTATTTTTATTATTTATTTCTTCTATAGCTGAAATAGGGGTTGGAGCTGGATGAACAGTATATCCTCCTTTGGCATCTATTGTTGGACATAATGGTAGATCAGTAGATTTTGCTATTTTTTCTTTACATTTAGCTGGTGCTTCATCAATTATAGGAGCTATTAATTTTATTTCTACTATTATTAATATACGATCAGTAGGAATATCTTTAGATAAAATTCCTTTATTTGTTTGATCTGTAATAATTACTGCTGTATTATTATTGTTATCATTACCTGTTTTAGCAGGAGCTATTACTATATTATTAACTGATCGA | 593 | 2014-03-20 | BOLD:AAA5654 | 2010-07-15 | 721 | NA | 53.618,-112.875 | GPSmap 60Cx | NA | NA | NA | Nearctic | NA | Canadian_Aspen_forests_and_parklands | Elk Island NP | Tawayik Lake Trail | aspen, birch, rose bushes, adjacent to wetland/lake | CA | Canada | Alberta | BBCNP,DS-SOC2014,DS-ARANCCYH,DATASET-BBEINP1,DS-SPCANADA,DS-JUMPGLOB,DS-MOB112 | NA |
 
 Similarly, sampleids or dataset_codes or project_codes can also be used
 to fetch data. The data can also be filtered on different parameters
@@ -130,7 +134,7 @@ such as Geography, Attributions and DNA Sequence information using the
 
 Downloaded data can then be summarized in different ways. Options
 currently include a concise summary of all the data, detailed taxonomic
-counts, data completeness and a barcode-based summary
+counts, data completeness and a barcode based summary
 
 ``` r
 BCDM_data_summary<-bold.data.summarize(bold_df = BCDM_data,
@@ -140,7 +144,7 @@ BCDM_data_summary$concise_summary
 #>                        Category   Value
 #> 1                 Total_records    1336
 #> 2     Total_records_w_sequences    1336
-#> 3                Unique_species      80
+#> 3                Unique_species      79
 #> 4                   Unique_BINs     117
 #> 5              Unique_countries       1
 #> 6             Unique_institutes       6
@@ -174,19 +178,139 @@ tools.The flat file contents can be modified as per user requirements
 #             export = "file_path_with_intended_name.fas")
 ```
 
-#### Other functions
+#### Sequence Alignment
 
-The package also has functions that provide sequence alignment,
-NJ clustering, biodiversity analysis and occurrence mapping using the
-downloaded BCDM data. Additionally, some of these functions also output objects
-that are commonly used by other R packages (Ex. ‘sf’ dataframe,
-occurrence matrix for ‘vegan’ and ‘betapart’). Please go through the
-help manual (Link provided above) for detailed usage of all the
-functions of BOLDConnectR with examples.
+Downloaded data be aligned by either *ClustalOmega* or *muscle*
+algorithms with custom headers for the aligned sequences. The function
+uses `msa`, `ape`, `muscle` and `Biostrings` internally for the sequence
+alignment. The packages `muscle`, `msa` and `Biostrings` must be
+imported prior to using the align function.
 
-*BOLDconnectR* can retrieve data very fast (~100k records in a
+``` r
+
+# bold.apikey('')
+
+# fetch.test.data.4.align<-bold.fetch(identifiers = "DS-IBOLR24",
+#                                     get_by = "dataset_codes",
+#                                     filt_taxonomy = "Manduca",
+#                                     filt_basecount = c(600,670))
+
+# Sequence is aligned using ClustalOmega with default settings
+# align.test.data<-bold.analyze.align(bold_df = fetch.test.data.4.align,
+#                                     marker = "COI-5P",
+#                                     cols_for_seq_names = c("species","bin_uri"),
+#                                     align_method = "ClustalOmega")
+
+# Confirm the result
+# head(subset(align.test.data,select = c(aligned_seq,msa.seq.name)),5)
+```
+
+#### NJ tree visualization
+
+The aligned sequences cane also be visualized as a Neighbour joining
+tree. The function uses the `ape` `nj` function to help create the
+visualization. All additional arguments available for the `nj` function
+can be passed on to this function as well.
+
+``` r
+
+# bold.apikey('')
+
+# fetch.test.data.4.align<-bold.fetch(identifiers = "DS-IBOLR24",
+#                                     get_by = "dataset_codes",
+#                                     filt_taxonomy = "Manduca",
+#                                     filt_basecount = c(600,670))
+
+# Sequence is aligned using ClustalOmega with default settings
+# align.test.data<-bold.analyze.align(bold_df = fetch.test.data.4.align,
+#                                     marker = "COI-5P",
+#                                     cols_for_seq_names = c("species","bin_uri"),
+#                                     align_method = "ClustalOmega")
+
+# NJ tree with basic settings
+# test.tree<-bold.analyze.tree(bold_df=align.test.data,
+#                                 dist_model = "K80",
+#                                 clus_method = "njs",
+#                                 tree_plot = TRUE,
+#                                 tree_plot_type = 'p')
+# 
+# The phylo object which can be used for further customization of the plot
+# test.tree$data_for_plot
+# 
+# base frequencies
+# test.tree$base_freq
+```
+
+#### Biodiversity analysis
+
+Basic biodiversity analyses (preston plots, taxa richness estimation,
+shannon diversity and beta diversity) of the downloaded data can be
+carried out at any level of taxonomic hierarchy and geographic category.
+The function uses `vegan`, `BAT` and `betapart` internally. The result
+also provides an `occurrence matrix` that can be used for other
+ecological analyses.
+
+``` r
+
+# bold.apikey('')
+# fetch.test.data<-bold.fetch(identifiers = "DS-IBOLR24",
+#                                get_by = "dataset_codes")
+
+# 1. Generic richness
+# test.richness.diversity<-bold.analyze.diversity(bold_df=fetch.test.data,
+#                                                    taxon_rank = "genus",
+#                                                     site_type = "locations",
+#                                                    location_type = "country.ocean",
+#                                                    diversity_profile = "richness")
+
+# View the richness estimator results
+# View(test.richness.diversity$richness)
+
+# Occurrence matrix (site X species)
+# test.richness.diversity$comm.matrix
+
+# 2. Preston plots
+# test.richness.diversity2<-bold.analyze.diversity(bold_df=fetch.test.data,
+#                                                  taxon_rank = "genus",
+#                                                  site_type = "locations",
+#                                                  location_type = "country.ocean",
+#                                                  diversity_profile = "preston")
+# View the preston plot
+# test.richness.diversity2$preston.plot
+```
+
+#### Occurrence map
+
+The package also offers functionality to generate occurrence maps of the
+downloaded data at different scales (Complete geographic extent of the
+downloaded data, country specific occurrence and a bounding box based
+occurrenc map). The result also provides an `sf` object that can be used
+for other spatial analyses.
+
+``` r
+
+# bold.apikey('')
+# fetch.test.data<-bold.fetch(identifiers = "DS-IBOLR24",
+#                                get_by = "dataset_codes")
+
+# All occurrences
+# test.map<-bold.analyze.map(fetch.test.data)
+
+# Specific country
+# test.map.brazil=bold.analyze.map(fetch.test.data,country = "Australia")
+```
+
+*BOLDconnectR* is able to retrieve data very fast (~100k records in a
 minute on a fast wired connection).
 
-*Citation:* Padhye SM, Ballesteros-Mejia CL, Agda TJA, Agda JRA,
-Ratnasingham S. BOLDconnectR: An R package for streamlined retrieval,
-transformation and analysis of BOLD DNA barcode data (MS in prep).
+#### Funding
+
+This work was funded by the [New Frontiers in Research Fund (NFRF) -
+Transformation
+2020](https://sshrc-crsh.canada.ca/funding-financement/nfrf-fnfr/transformation/transformation-eng.aspx)
+
+#### Citation
+
+Padhye SM, Ballesteros-Mejia CL,Agda TJA, Agda JRA, Ratnasingham S.
+BOLDconnectR: An R package for streamlined retrieval, transformation and
+analysis of BOLD DNA barcode data.(Submitted to *Plos ONE*)
