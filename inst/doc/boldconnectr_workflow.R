@@ -6,16 +6,18 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 #devtools::install_github("boldsystems-central/BOLDconnectR")
 library(BOLDconnectR)
 
-## ----suggests,message=F,warning=F,echo=FALSE,eval=F---------------------------
-# if (!requireNamespace("BiocManager", quietly = TRUE)) {
-#   install.packages("BiocManager")
-# }
-# 
-# BiocManager::install(c("msa", "Biostrings", "muscle"))
-# 
-# library(msa)
-# library(Biostrings)
-# library(muscle)
+## ----suggests,message=F,warning=F,echo=FALSE, quietly = TRUE------------------
+seq_alignment_pkgs <- all(
+  requireNamespace("msa", quietly = TRUE),
+  requireNamespace("Biostrings", quietly = TRUE),
+  requireNamespace("muscle", quietly = TRUE)
+)
+
+if (seq_alignment_pkgs) {
+  library(msa)
+  library(Biostrings)
+  library(muscle)
+}
 
 ## ----api-key, eval=T,include=FALSE--------------------------------------------
 # bold.apikey("")
@@ -38,13 +40,12 @@ bcdm_summary <- bold.data.summarize(
   bold_df = streptocephalus_data,
   summary_type = "concise_summary"
 )
-
 DT::datatable(bcdm_summary$concise_summary)
 
 ## ----map-analysis, message=F,warning=F----------------------------------------
 map_res <- bold.analyze.map(bold_df = streptocephalus_data)
 
-## ----align-data, message=F,warning=F------------------------------------------
+## ----align-data, message=F,warning=F,eval=seq_alignment_pkgs------------------
 seq_align <- bold.analyze.align(
   bold_df = streptocephalus_data,
   marker = "COI-5P",
@@ -56,7 +57,7 @@ DT::datatable(
   options = list(pageLength = 10, scrollX = TRUE)
 )
 
-## ----tree-analysis,message=F,warning=F----------------------------------------
+## ----tree-analysis,message=F,warning=F,eval=seq_alignment_pkgs----------------
 seq_tree <- bold.analyze.tree(
   bold_df = seq_align,
   dist_model = "K80",

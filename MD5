@@ -1,4 +1,4 @@
-ae0889c664a6c396f74c89cd1bb711e6 *DESCRIPTION
+659c0ed191464e10b565183ce3356543 *DESCRIPTION
 1175a9de6579341570dd4497d102d5be *LICENSE
 ebb07ff09fef827bfedd22068f83ee18 *NAMESPACE
 ad9e740a6619ab8a75b8936ed5e2b6af *NEWS.md
@@ -16,7 +16,7 @@ abda23e86393f2ae105945e618a3fbee *R/external.bold.export.R
 ec564ee16a43cb59455cad24c297ea4a *R/globals.R
 11c7adfbbbf3e1a87b4944d620ffccee *R/helper.align.msa.gen_ape_obj.R
 9978decc72af216851a69c1ed423ad3c *R/helper.column_presets.R
-e959389ad973419e61d74c5cf37fb9c2 *R/helper.diversity.gencommmat.R
+a577dcd459e95084cc5eaff1b1731074 *R/helper.diversity.gencommmat.R
 a1512188f25ae7eccea3f3981fbfd93f *R/helper.fetch.bold.data.allids.R
 a83b6d561e51b5c8767c603e47eada01 *R/helper.fetch.filters.R
 db36ce88a85f7ea8803395b0ffb98f61 *R/helper.fetch.functions.4.datawrangling.R
@@ -24,7 +24,7 @@ db36ce88a85f7ea8803395b0ffb98f61 *R/helper.fetch.functions.4.datawrangling.R
 037231e747313b7400050a776f4baa46 *R/helper.fetch.json_data_download_&_json2df.R
 e60b06c62acc702ca18b2b500e9af7e9 *R/helper.functions.4.bold.analyze.diversity.R
 e6327ea134dd8a86de745be4d1f44d39 *R/helper.functions.4.bold.data.summarize.R
-5837b7355bdb243cccc855136efae939 *R/helper.functions.4.bold.public.search.R
+86b6a7ce76a6483a6a5f6cd3a3e887a5 *R/helper.functions.4.bold.public.search.R
 d766f4f75e148846fdc070582d26e95a *R/test.data.R
 5a49811530bc65a3bfcb5314f892b055 *R/test.data2.R
 bbf7dd4ea4df0a7d3cfbe54b7547313d *README.md
@@ -32,9 +32,9 @@ aa5e5a2cbfaea3d9b6cdbe378ac48cee *build/partial.rdb
 93ec4503aa42382175ecee3414e5279b *build/vignette.rds
 3f1669fe2b5dd44ee2fbd3de36119e5a *data/test.data.rda
 803b846c83edfab7340ad1bad9b81f1e *data/test.data2.rda
-1b8ee0a77948245b291b4a2257787535 *inst/doc/boldconnectr_workflow.R
-8ba142ef8ef7555e300f47301d246ffb *inst/doc/boldconnectr_workflow.Rmd
-60ad222272aa41eef0ba1a479bb15fdc *inst/doc/boldconnectr_workflow.html
+c054416ea66f0cb5f2f1a80690a45fe5 *inst/doc/boldconnectr_workflow.R
+fd3c55c0b5372a1cd4105078ff64b027 *inst/doc/boldconnectr_workflow.Rmd
+b7aa52c1e42b5c125b141baf557dc4d1 *inst/doc/boldconnectr_workflow.html
 f878e12982db65989e5026c96ec4ad89 *man/base_url_parse.Rd
 520e0d4570976946e11b81ec3d489852 *man/bold.analyze.align.Rd
 0ff023d3337778a61f32db56ab558bd7 *man/bold.analyze.diversity.Rd
@@ -69,4 +69,4 @@ bf2f1ad432ecccee3400afe533404113 *man/figures/lifecycle-superseded.svg
 35900c6a8bb46c997d8471977fb836d0 *man/taxon_hierarchy_count.Rd
 f19bf96683f2653c61f4459ded351894 *man/test.data.Rd
 521bd47f19aab1f338dc99deb8cbface *man/test.data2.Rd
-8ba142ef8ef7555e300f47301d246ffb *vignettes/boldconnectr_workflow.Rmd
+fd3c55c0b5372a1cd4105078ff64b027 *vignettes/boldconnectr_workflow.Rmd
