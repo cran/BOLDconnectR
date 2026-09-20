@@ -12,103 +12,127 @@ export(bold.fields.info)
 export(bold.full.search)
 export(bold.public.search)
 import(dplyr)
-importFrom(BAT,alpha.accum)
-importFrom(BAT,beta)
-importFrom(ape,add.scale.bar)
-importFrom(ape,as.DNAbin)
-importFrom(ape,base.freq)
-importFrom(ape,dist.dna)
-importFrom(ape,nj)
-importFrom(ape,njs)
-importFrom(ape,plot.phylo)
-importFrom(ape,read.dna)
-importFrom(ape,write.FASTA)
-importFrom(ape,write.tree)
-importFrom(data.table,fread)
-importFrom(data.table,rbindlist)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,across)
-importFrom(dplyr,between)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,c_across)
-importFrom(dplyr,case_when)
-importFrom(dplyr,distinct)
-importFrom(dplyr,filter)
-importFrom(dplyr,if_all)
-importFrom(dplyr,if_any)
-importFrom(dplyr,matches)
-importFrom(dplyr,mutate)
-importFrom(dplyr,pull)
-importFrom(dplyr,rowwise)
-importFrom(dplyr,select)
-importFrom(dplyr,ungroup)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,coord_sf)
-importFrom(ggplot2,element_blank)
-importFrom(ggplot2,element_line)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,geom_bar)
-importFrom(ggplot2,geom_line)
-importFrom(ggplot2,geom_point)
-importFrom(ggplot2,geom_sf)
-importFrom(ggplot2,geom_sf_text)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,ggsave)
-importFrom(ggplot2,ggtitle)
-importFrom(ggplot2,labeller)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,scale_y_continuous)
-importFrom(ggplot2,sym)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,theme_bw)
-importFrom(ggplot2,theme_classic)
-importFrom(ggplot2,theme_minimal)
-importFrom(ggplot2,xlab)
-importFrom(ggplot2,ylab)
+importFrom(BAT,
+  alpha.accum,
+  beta
+)
+importFrom(ape,
+  add.scale.bar,
+  as.DNAbin,
+  base.freq,
+  dist.dna,
+  nj,
+  njs,
+  plot.phylo,
+  read.dna,
+  write.FASTA,
+  write.tree
+)
+importFrom(data.table,
+  fread,
+  rbindlist
+)
+importFrom(dplyr,
+  "%>%",
+  across,
+  between,
+  bind_rows,
+  c_across,
+  case_when,
+  distinct,
+  filter,
+  if_all,
+  if_any,
+  matches,
+  mutate,
+  pull,
+  rowwise,
+  select,
+  ungroup
+)
+importFrom(ggplot2,
+  aes,
+  coord_sf,
+  element_blank,
+  element_line,
+  element_text,
+  geom_bar,
+  geom_line,
+  geom_point,
+  geom_sf,
+  geom_sf_text,
+  ggplot,
+  ggsave,
+  ggtitle,
+  labeller,
+  labs,
+  scale_y_continuous,
+  sym,
+  theme,
+  theme_bw,
+  theme_classic,
+  theme_minimal,
+  xlab,
+  ylab
+)
 importFrom(graphics,par)
 importFrom(grid,unit)
-importFrom(httr,GET)
-importFrom(httr,POST)
-importFrom(httr,add_headers)
-importFrom(httr,content)
-importFrom(httr,http_error)
-importFrom(httr,http_status)
-importFrom(httr,stop_for_status)
-importFrom(httr,upload_file)
+importFrom(httr,
+  GET,
+  POST,
+  add_headers,
+  content,
+  http_error,
+  http_status,
+  stop_for_status,
+  upload_file
+)
 importFrom(jsonlite,fromJSON)
 importFrom(maps,map)
 importFrom(rlang,sym)
 importFrom(rnaturalearth,ne_countries)
-importFrom(sf,st_as_sf)
-importFrom(sf,st_as_sfc)
-importFrom(sf,st_bbox)
-importFrom(sf,st_crs)
-importFrom(sf,st_drop_geometry)
-importFrom(sf,st_intersection)
-importFrom(sf,st_intersects)
-importFrom(sf,st_make_grid)
-importFrom(sf,st_read)
-importFrom(sf,st_set_crs)
-importFrom(sf,st_sf)
-importFrom(sf,st_simplify)
-importFrom(sf,st_transform)
-importFrom(skimr,partition)
-importFrom(skimr,skim)
-importFrom(skimr,skim_with)
-importFrom(stats,as.formula)
-importFrom(stats,fitted)
-importFrom(stats,setNames)
-importFrom(tidyr,all_of)
-importFrom(tidyr,drop_na)
-importFrom(tidyr,gather)
-importFrom(tidyr,pivot_longer)
-importFrom(tidyr,pivot_wider)
-importFrom(tidyr,separate)
-importFrom(tidyr,starts_with)
-importFrom(tidyr,unite)
-importFrom(utils,URLencode)
-importFrom(utils,download.file)
-importFrom(utils,read.delim)
-importFrom(utils,write.table)
-importFrom(vegan,diversity)
-importFrom(vegan,prestondistr)
+importFrom(sf,
+  st_as_sf,
+  st_as_sfc,
+  st_bbox,
+  st_crs,
+  st_drop_geometry,
+  st_intersection,
+  st_intersects,
+  st_make_grid,
+  st_read,
+  st_set_crs,
+  st_sf,
+  st_simplify,
+  st_transform
+)
+importFrom(skimr,
+  partition,
+  skim,
+  skim_with
+)
+importFrom(stats,
+  as.formula,
+  fitted,
+  setNames
+)
+importFrom(tidyr,
+  all_of,
+  drop_na,
+  gather,
+  pivot_longer,
+  pivot_wider,
+  separate,
+  starts_with,
+  unite
+)
+importFrom(utils,
+  URLencode,
+  download.file,
+  read.delim,
+  write.table
+)
+importFrom(vegan,
+  diversity,
+  prestondistr
+)

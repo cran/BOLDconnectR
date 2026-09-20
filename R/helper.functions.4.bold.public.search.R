@@ -43,7 +43,15 @@ parse_query <- function(query) {
     trial_query_quoted,
     sep = ""
   ))
-  get.data_parse <- fromJSON(url(full_url_parse))
+  get.data_parse <- tryCatch(
+    fromJSON(url(full_url_parse)),
+    error = function(e) {
+      stop(
+        "Download failed.",
+        call. = FALSE
+      )
+    }
+  )
   return(get.data_parse)
 }
 # 2. Preprocess the query
@@ -71,7 +79,7 @@ preprocess_query <- function(parsed_query) {
       result
     },
     error = function(e) {
-      stop(paste("Download failed.\nDetails:", e$message))
+      stop(paste("Download failed.\nDetails:", e$message),call. = FALSE)
     }
   )
   suppressWarnings(suppressMessages(json_preprocess <- content(
@@ -87,7 +95,7 @@ preprocess_query <- function(parsed_query) {
   tryCatch(
     {
       if (any(grepl("ids:", json_preprocess_data_final$matched))) {
-        stop("Re-check search queries")
+        stop("Re-check search queries",call. = FALSE)
       }
       # Code continues here if no error
     },
@@ -122,7 +130,7 @@ counts_query <- function(preprocessed_query) {
         result
       },
       error = function(e) {
-        stop(paste("Download failed.\nDetails:", e$message))
+        stop(paste("Download failed.\nDetails:", e$message),call. = FALSE)
       }
     )
     suppressWarnings(suppressMessages(
@@ -217,7 +225,7 @@ generate_query_id <- function(matched_terms) {
       result
     },
     error = function(e) {
-      stop(paste("Download failed.\nDetails:", e$message))
+      stop(paste("Download failed.\nDetails:", e$message),call. = FALSE)
     }
   )
   # Extract the data
@@ -244,17 +252,27 @@ generate_query_id <- function(matched_terms) {
 # 5. Obtain the data based on the query
 obtain_data <- function(download_url) {
   temp_file <- tempfile()
+
   suppressWarnings(
-    download_data <- download.file(
-      download_url,
-      destfile = temp_file,
-      quiet = TRUE
+    download_data <- tryCatch(
+      download.file(
+        download_url,
+        destfile = temp_file,
+        quiet = TRUE
+      ),
+      error = function(e) {
+        stop(
+          "Unable to download data. Please try again later.",
+          call. = FALSE
+        )
+      }
     )
   )
-  # Check to see if there is data downloaded. If no data is available, it will return NULL
+
   if (file.size(temp_file) == 0) {
     return(NULL)
   }
+
   final_data <- read.delim(temp_file, sep = "\t")
   return(final_data)
   unlink(temp_file)

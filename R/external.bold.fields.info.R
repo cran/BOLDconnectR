@@ -22,41 +22,64 @@
 #' @export
 #'
 bold.fields.info <- function(print.output = FALSE) {
+
   # Saving the original options of the user
   original_timeout <- getOption("timeout")
+
   # Reset the options on exit
   on.exit(options(timeout = original_timeout))
+
   # Setting new options for the function
   options(timeout = 350)
-  bold.fields.data <- suppressMessages(data.table::fread("https://github.com/DNAdiversity/BCDM/raw/main/field_definitions.tsv",
-    sep = "\t",
-    quote = "",
-    check.names = FALSE,
-    verbose = FALSE,
-    showProgress = FALSE,
-    data.table = FALSE,
-    fill = TRUE,
-    tmpdir = tempdir()
-  )) %>%
+
+  bold.fields.data <- tryCatch(
+    suppressMessages(suppressWarnings(
+      data.table::fread(
+        "https://github.com/DNAdiversity/BCDM/raw/main/field_definitions.tsv",
+        sep = "\t",
+        quote = "",
+        check.names = FALSE,
+        verbose = FALSE,
+        showProgress = FALSE,
+        data.table = FALSE,
+        fill = TRUE,
+        tmpdir = tempdir()
+      )
+    )
+    ),
+    error = function(e) {
+      stop(
+        "Download failed. Unable to download the BCDM field definitions resource.",
+         call. = FALSE
+      )
+    }
+  ) %>%
     dplyr::select(
       dplyr::matches("field", ignore.case = TRUE),
       dplyr::matches("definition", ignore.case = TRUE),
       dplyr::matches("data_type", ignore.case = TRUE)
     ) %>%
-    dplyr::mutate(R_field_types = dplyr::case_when(
-      data_type == "string" ~ "character",
-      data_type %in% c("char", "array") ~ "character",
-      data_type == "float" ~ "numeric",
-      data_type == "number" ~ "numeric",
-      data_type == "integer" ~ "integer",
-      data_type == "string:date" ~ "Date"
-    )) %>%
-    dplyr::select(-dplyr::matches("data_type", ignore.case = TRUE)) %>%
-    dplyr::mutate(field = case_when(
-      field == "country/ocean" ~ "country.ocean",
-      field == "province/state" ~ "province.state",
-      TRUE ~ field
-    ))
+    dplyr::mutate(
+      R_field_types = dplyr::case_when(
+        data_type == "string" ~ "character",
+        data_type %in% c("char", "array") ~ "character",
+        data_type == "float" ~ "numeric",
+        data_type == "number" ~ "numeric",
+        data_type == "integer" ~ "integer",
+        data_type == "string:date" ~ "Date"
+      )
+    ) %>%
+    dplyr::select(
+      -dplyr::matches("data_type", ignore.case = TRUE)
+    ) %>%
+    dplyr::mutate(
+      field = dplyr::case_when(
+        field == "country/ocean" ~ "country.ocean",
+        field == "province/state" ~ "province.state",
+        TRUE ~ field
+      )
+    )
+
   if (print.output == TRUE) {
     return(bold.fields.data)
   } else {

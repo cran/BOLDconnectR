@@ -1,7 +1,7 @@
 Package: BOLDconnectR
 Title: Retrieve, Transform and Analyze the Barcode of Life Data Systems
         Data
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
     person("Sameer", "Padhye", , "spadhye@uoguelph.ca", role = c("aut", "cre")),
     person("Liliana", "Ballesteros-Mejia", , "cballest@uoguelph.ca", role = "aut"),
@@ -27,14 +27,14 @@ Imports: ape (>= 5.5), BAT (>= 2.0), data.table (>= 1.13), dplyr (>=
         maps (>= 3.3), methods, rlang, rnaturalearth, sf (>= 0.9.4),
         skimr (>= 2.1.2), tidyr (>= 1.1.1), utils, vegan (>= 2.5.7)
 Suggests: Biostrings, BiocManager, DT, msa, muscle, knitr, rmarkdown
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2026-08-19 18:14:42 UTC; sameerpadhye
+Packaged: 2026-09-17 20:10:30 UTC; sameerpadhye
 Author: Sameer Padhye [aut, cre],
   Liliana Ballesteros-Mejia [aut],
   Timothy Agda [aut],
   Jireh Agda [aut],
   Sujeevan Ratnasingham [aut]
 Repository: CRAN
-Date/Publication: 2026-08-20 00:40:02 UTC
+Date/Publication: 2026-09-20 09:10:20 UTC
